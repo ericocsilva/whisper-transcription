@@ -1,0 +1,8 @@
+streamlit>=1.32.0
+numpy<2
+pydub
+openai-whisper
+torch==2.2.0
+torchaudio==2.2.0
+pyannote.audio==3.3.2
+huggingface-hub<0.20

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Whisper cache & models
+.cache/
+
+# Recordings & transcriptions (large files)
+recordings/
+transcriptions/
+
+# Databricks
+whisper/.databricks/
+whisper/fixtures/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/settings.json
