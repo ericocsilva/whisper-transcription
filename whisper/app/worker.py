@@ -11,15 +11,19 @@ import tempfile
 import subprocess
 import threading
 import traceback
+import tempfile
 import imageio_ffmpeg
 
 _FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 
-# Inject the bundled ffmpeg binary directory into PATH so that openai-whisper,
-# pydub, and any other library that shells out to "ffmpeg" can find it.
-_ffmpeg_dir = os.path.dirname(_FFMPEG)
-if _ffmpeg_dir not in os.environ.get("PATH", ""):
-    os.environ["PATH"] = _ffmpeg_dir + os.pathsep + os.environ.get("PATH", "")
+# imageio_ffmpeg ships the binary with a versioned name (e.g. ffmpeg-linux64-v6.0),
+# not as "ffmpeg". Create a symlink named "ffmpeg" in a temp dir and prepend it
+# to PATH so openai-whisper, pydub, and ffprobe callers all find it by name.
+_ffmpeg_tmpdir = tempfile.mkdtemp()
+_ffmpeg_link = os.path.join(_ffmpeg_tmpdir, "ffmpeg")
+if not os.path.exists(_ffmpeg_link):
+    os.symlink(_FFMPEG, _ffmpeg_link)
+os.environ["PATH"] = _ffmpeg_tmpdir + os.pathsep + os.environ.get("PATH", "")
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
