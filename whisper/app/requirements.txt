@@ -1,6 +1,7 @@
 streamlit>=1.32.0
 numpy<2
 pydub
+imageio-ffmpeg
 openai-whisper
 torch==2.2.0
 torchaudio==2.2.0

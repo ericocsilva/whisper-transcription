@@ -11,6 +11,9 @@ import tempfile
 import subprocess
 import threading
 import traceback
+import imageio_ffmpeg
+
+_FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
@@ -77,9 +80,9 @@ def _get_audio_duration(audio_path: str) -> float:
     try:
         result = subprocess.run(
             [
-                "ffprobe", "-v", "quiet", "-show_entries",
+                _FFMPEG, "-v", "quiet", "-show_entries",
                 "format=duration", "-of", "default=noprint_wrappers=1:nokey=1",
-                audio_path,
+                "-i", audio_path,
             ],
             capture_output=True, text=True, timeout=30,
         )
@@ -96,7 +99,7 @@ def _extract_audio(video_path: str, progress: dict) -> str:
 
     audio_path = video_path.rsplit(".", 1)[0] + ".wav"
     cmd = [
-        "ffmpeg", "-y", "-i", video_path,
+        _FFMPEG, "-y", "-i", video_path,
         "-vn", "-acodec", "pcm_s16le", "-ar", "16000", "-ac", "1",
         audio_path,
     ]
