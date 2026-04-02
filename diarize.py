@@ -3,9 +3,9 @@ import os
 from pyannote.audio import Pipeline
 
 HF_TOKEN = os.environ.get("HUGGINGFACE_TOKEN", "")
-AUDIO_FILE = "/Users/erico.silva/Whisper/recordings/pismo_databricks_20260223.wav"
-TRANSCRIPT_JSON = "/Users/erico.silva/Whisper/transcriptions/pismo_databricks_20260223.json"
-OUTPUT_FILE = "/Users/erico.silva/Whisper/transcriptions/pismo_databricks_20260223_diarized.txt"
+AUDIO_FILE = "/Users/erico.silva/Whisper/recordings/meeting_20260223.wav"
+TRANSCRIPT_JSON = "/Users/erico.silva/Whisper/transcriptions/meeting_20260223.json"
+OUTPUT_FILE = "/Users/erico.silva/Whisper/transcriptions/meeting_20260223_diarized.txt"
 
 print("Loading diarization pipeline...")
 pipeline = Pipeline.from_pretrained(
@@ -17,7 +17,7 @@ print("Running diarization (this may take a while)...")
 diarization = pipeline(AUDIO_FILE)
 
 # Save raw diarization RTTM
-rttm_path = "/Users/erico.silva/Whisper/transcriptions/pismo_databricks_20260223.rttm"
+rttm_path = "/Users/erico.silva/Whisper/transcriptions/meeting_20260223.rttm"
 with open(rttm_path, "w") as f:
     diarization.write_rttm(f)
 print(f"Saved RTTM to {rttm_path}")
