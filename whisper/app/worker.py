@@ -14,6 +14,12 @@ import traceback
 import imageio_ffmpeg
 
 _FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
+
+# Inject the bundled ffmpeg binary directory into PATH so that openai-whisper,
+# pydub, and any other library that shells out to "ffmpeg" can find it.
+_ffmpeg_dir = os.path.dirname(_FFMPEG)
+if _ffmpeg_dir not in os.environ.get("PATH", ""):
+    os.environ["PATH"] = _ffmpeg_dir + os.pathsep + os.environ.get("PATH", "")
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
