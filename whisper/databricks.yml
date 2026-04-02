@@ -37,14 +37,14 @@ targets:
     mode: development
     default: true
     workspace:
-      host: https://adb-7405618499553895.15.azuredatabricks.net
+      host: https://adb-7405612655723059.19.azuredatabricks.net
     variables:
       catalog: catalog_whisper
       schema: dev
   prod:
     mode: production
     workspace:
-      host: https://adb-7405618499553895.15.azuredatabricks.net
+      host: https://adb-7405612655723059.19.azuredatabricks.net
       # We explicitly deploy to /Workspace/Users/erico.silva@databricks.com to make sure we only have a single copy.
       root_path: /Workspace/Users/erico.silva@databricks.com/.bundle/${bundle.name}/${bundle.target}
     variables:
